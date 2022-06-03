@@ -10,10 +10,11 @@ router.get('/', (req, res, next) => {
 });
 
 // serverState
-router.get('/serverState', (req, res, next) => {
+router.get('/state/serverState', (req, res, next) => {
     res.json({
         status : "success",
-        code : 200
+        code : 200,
+        message : "서버 연결 완료"
     })
 });
 

@@ -7,6 +7,7 @@ import cors from "cors";
 require("dotenv").config();
 
 import indexRouter from "./routes/index";
+import authRouter from "./routes/auth";
 
 const app = express();
 
@@ -28,7 +29,6 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // cors 허용
 app.use(cors());
-
 // cors 특정 도메인이 있을경우
 // let corsOptions = {
 //     origin: 'https://www.domain.com',
@@ -36,8 +36,18 @@ app.use(cors());
 // }
 // app.use(cors(corsOptions));
 
+
+// Router 영역
+// ********************************************************
 // index 라우터
 app.use("/", indexRouter);
+
+// 계정 관련 라우터
+app.use("/api/auth", authRouter);
+
+
+
+// ********************************************************
 
 
 

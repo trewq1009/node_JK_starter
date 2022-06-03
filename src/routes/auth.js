@@ -55,6 +55,8 @@ router.get('/profile/:id', (req, res, next) => {
 // router.post('/delete', authController.test);
 
 
+router.get('/test', authController.test);
+
 
 
 

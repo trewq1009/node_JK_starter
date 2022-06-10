@@ -1,5 +1,6 @@
 // import userModel from '../models/user';
 import database from '../loaders/database';
+import {Container} from "typedi";
 
 
 /**
@@ -16,7 +17,7 @@ export default class UserService {
      */
     constructor()
     {
-        this.db;
+        this.db = Container.get('db');
     }
 
     /**
@@ -26,8 +27,7 @@ export default class UserService {
     findAll()
     {
         return new Promise (async (resolve, reject) => {
-            this.db = await database();
-    
+            // this.db = await database();
             this.db.query('select * from tr_account',  (err, result, field) => {
                 if(err) console.log(err);
                 if(result) resolve(result);
@@ -42,8 +42,6 @@ export default class UserService {
     findOne(no)
     {
         return new Promise (async (resolve, reject) => {
-            this.db = await database();
-
             this.db.query(`select * from tr_account where ${no} limit 1`, (err, result, field) => {
                 if(err) console.log(err);
                 if(result) resolve(result);

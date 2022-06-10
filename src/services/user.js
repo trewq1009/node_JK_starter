@@ -20,14 +20,31 @@ export default class UserService {
     }
 
     /**
-     * 유저 목록 
-     * @returns object || null
+     * 유저 리스트
+     * @returns array || null
      */
-    findAll() {
+    findAll()
+    {
         return new Promise (async (resolve, reject) => {
             this.db = await database();
         
             this.db.query('select * from tr_account',  (err, result, field) => {
+                if(err) console.log(err);
+                if(result) resolve(result);
+            })
+        })
+    }
+
+    /**
+     * 특정 유저
+     * @return array || null
+     */
+    findOne(no)
+    {
+        return new Promise (async (resolve, reject) => {
+            this.db = await database();
+
+            this.db.query(`select * from tr_account where ${no} limit 1`, (err, result, field) => {
                 if(err) console.log(err);
                 if(result) resolve(result);
             })

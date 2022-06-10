@@ -29,13 +29,17 @@ export default (app) => {
     /**
      * 특정 데이터 조회
      */
-    router.get('/:no', middleware.testMiddleware, (req, res, next) => {
+    router.get('/:no', middleware.testMiddleware, async (req, res, next) => {
         const {no} = req.params;
+
+        const userServiceInstance = new userService;
+        const data = await userServiceInstance.findOne(no);
 
         return res.status(200).json({
             status : 'success',
             message : 'CRUD Test : Get Method => /:no',
-            params : no
+            params : no,
+            data : data
         })
     })
 

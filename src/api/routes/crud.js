@@ -9,19 +9,18 @@ import {Container} from "typedi";
 const router = express.Router();
 
 export default (app) => {
+    const logger = Container.get('logger');
+
     app.use('/api/crud', router);
 
     /**
      * 전체 리스트 & 모든 정보 불러오기
      */
     router.get('/', async (req, res, next) => {
-
-        const logger = Container.get('logger');
-        logger.info('test');
-
         const userServiceInstance = new userService;
         const list = await userServiceInstance.findAll();
 
+        // logger.info('Test section 진입');
         return res.status(200).json({
             status : 'success',
             message : 'CRUD Test : Get Method => /',

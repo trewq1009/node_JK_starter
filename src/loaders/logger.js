@@ -53,4 +53,4 @@ if (config.APP_MODE !== 'production') {
     }));
 }
 
-export {logger}
+export default logger

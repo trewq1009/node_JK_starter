@@ -1,7 +1,7 @@
 import express from "express";
 import middleware from "../middlewares/index";
 import userService from "../../services/user";
-
+import {Container} from "typedi";
 
 /**
  * CRUD 보여주기용 라우터
@@ -15,6 +15,9 @@ export default (app) => {
      * 전체 리스트 & 모든 정보 불러오기
      */
     router.get('/', async (req, res, next) => {
+
+        const logger = Container.get('logger');
+        logger.info('test');
 
         const userServiceInstance = new userService;
         const list = await userServiceInstance.findAll();

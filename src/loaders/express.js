@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-import logger from "morgan";
+import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -10,7 +10,7 @@ export default async (app) => {
     // *********** Express 미들웨어 설정 ***********
      
     // request에 대한 로그를 기록하는 미들웨어
-    app.use(logger("dev"));
+    app.use(morgan("dev"));
 
     // 정적 파일들을 접근할 수 있도록하는 미들웨어
     app.use(express.static(path.join(__dirname, "public")));

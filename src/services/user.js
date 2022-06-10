@@ -27,7 +27,7 @@ export default class UserService {
     {
         return new Promise (async (resolve, reject) => {
             this.db = await database();
-        
+    
             this.db.query('select * from tr_account',  (err, result, field) => {
                 if(err) console.log(err);
                 if(result) resolve(result);
@@ -50,4 +50,9 @@ export default class UserService {
             })
         })
     }
+
+    // update(no)
+    // {
+
+    // }
 }

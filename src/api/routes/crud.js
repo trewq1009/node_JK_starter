@@ -1,9 +1,10 @@
 import express from "express";
-import middleware from "../middlewares/index"
+import middleware from "../middlewares/index";
+import userService from "../../services/user";
 
 
 /**
- * CURL 보여주기용 라우터
+ * CRUD 보여주기용 라우터
  */
 const router = express.Router();
 
@@ -13,10 +14,15 @@ export default (app) => {
     /**
      * 전체 리스트 & 모든 정보 불러오기
      */
-    router.get('/', (req, res, next) => {
+    router.get('/', async (req, res, next) => {
+
+        const userServiceInstance = new userService;
+        const list = await userServiceInstance.findAll();
+
         return res.status(200).json({
             status : 'success',
-            message : 'CRUD Test : Get Method => /'
+            message : 'CRUD Test : Get Method => /',
+            data : list
         })
     })
 

@@ -23,7 +23,7 @@ export default class UserService {
      * 유저 목록 
      * @returns object || null
      */
-    getData() {
+    findAll() {
         return new Promise (async (resolve, reject) => {
             this.db = await database();
         

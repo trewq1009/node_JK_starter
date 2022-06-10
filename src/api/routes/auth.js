@@ -10,7 +10,7 @@ export default (app) => {
     router.get('/', middleware.testMiddleware, async (req, res) => {
 
         const userServiceInstance = new userService;
-        const resultData = await userServiceInstance.getData();
+        const resultData = await userServiceInstance.findAll();
 
         return res.status(200).json({
             status: 'success',

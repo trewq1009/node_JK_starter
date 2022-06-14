@@ -1,6 +1,5 @@
 import express from "express";
 import middleware from "../middlewares/index";
-import userService from "../../services/user";
 import {Container} from "typedi";
 
 /**
@@ -27,6 +26,19 @@ export default (app) => {
             data : list
         })
     })
+
+    /**
+     * 생성
+     */
+    router.post('/', async (req, res, next) => {
+        const requestData = req.body;
+
+        return res.status(200).json({
+            status : 'success',
+            message : 'CRUD Test : Post Method => /',
+            data : requestData
+        })
+    });
 
     /**
      * 특정 데이터 조회

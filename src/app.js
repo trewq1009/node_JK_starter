@@ -1,7 +1,8 @@
 import config from "./config/index";
 import loaders from "./loaders";
 import express from "express";
-import Logger from "./loaders/logger";
+import {Logger} from "./loaders/logger";
+
 
 async function serverStart () 
 {
@@ -16,7 +17,8 @@ async function serverStart ()
    * 서버 설정
    */
   app.listen(config.APP_PORT, () => {
-    Logger.info(config.APP_PORT + " => Port Number");
+    Logger.info(`Server Start!!!!!`);
+    Logger.info(`Server Port =====> ${config.APP_PORT}`);
   });
 }
 serverStart();

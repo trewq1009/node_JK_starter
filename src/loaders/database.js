@@ -3,6 +3,7 @@ import config from "../config/index";
 import Logger from "./logger";
 
 export default async () => {
+    Logger.info('DB connecting...');
     let connection = db.createConnection({
         host     : config.DB_HOST,
         user     : config.DB_USER,

@@ -1,5 +1,5 @@
 import {Container} from "typedi";
-import Logger from "./logger";
+import {Logger} from "./logger";
 
 export default (dbConnection) => {
     try {
@@ -8,7 +8,8 @@ export default (dbConnection) => {
 
 
     } catch (e) {
-        Logger.error('Injection Error');
+        Logger.info('Injection Error....');
+        Logger.debug(`Injection Error Message : ${e.message}`);
         throw e;
     }
 }

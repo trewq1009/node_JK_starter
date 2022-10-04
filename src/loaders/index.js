@@ -1,7 +1,7 @@
 import expressLoader from "./express";
 import databaseLoader from "./database";
 import dependencyLoader from "./dependencyInjector";
-import Logger from "./logger";
+import {Logger} from "./logger";
 
 export default async (app) => {
     /*

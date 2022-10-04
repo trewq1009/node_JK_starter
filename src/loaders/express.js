@@ -3,6 +3,7 @@ import path from "path";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import config from "../config/index";
 
 import indexRouter from "../api/index";
 
@@ -10,7 +11,7 @@ export default async (app) => {
     // *********** Express 미들웨어 설정 ***********
      
     // request에 대한 로그를 기록하는 미들웨어
-    app.use(morgan("dev"));
+    app.use(morgan(config.APP_MODE));
 
     // 정적 파일들을 접근할 수 있도록하는 미들웨어
     app.use(express.static(path.join(__dirname, "public")));
@@ -20,7 +21,7 @@ export default async (app) => {
     app.use(express.urlencoded({ extended: false }));
 
     // request의 쿠키를 해석해주는 미들웨어
-    app.use(cookieParser(process.env.COOKIE_SECRET));
+    app.use(cookieParser(config.COOKIE_SECRET));
 
     // cors 허용
     app.use(cors());

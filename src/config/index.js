@@ -12,4 +12,6 @@ export default {
     DB_PASSWORD : process.env.DB_PASSWORD || "Rhksflwk1!",
     DB_NAME : process.env.DB_NAME || "iderms_config",
     DB_PORT : process.env.DB_PORT || 3306,
+
+    COOKIE_SECRET : process.env.COOKIE_SECRET || 'test',
 }

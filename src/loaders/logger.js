@@ -15,7 +15,7 @@ export let Logger = winston.createLogger({
         winston.format.printf((log) => `${moment().format('YYYY-MM-DD HH:mm:ss.SSS')},[${log.level.toUpperCase()}][Message]-${log.message}`)
     ),
     transports: [
-        // new winston.transports.Console(),
+        new winston.transports.Console(),   // console 창에 내역 띄우기
         new (winstonDaily)({
             filename: 'logs/log-api-%DATE%.log',
             // datePattern: 'YYYY-MM-DD-HH-mm',

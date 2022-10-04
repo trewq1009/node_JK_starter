@@ -1,56 +1,58 @@
 import winston from "winston";
 import winstonDaily from "winston-daily-rotate-file";
-import config from "../config/index";
+const moment = require('moment');
 
-const logDir = 'logs';  // logs 디렉토리 하위에 파일 저장
-const {combine, timestamp, printf} = winston.format;
 
-// log format
-const logFormat = printf(info => {
-    return `${info.timestamp} ${info.level} : ${info.message}`;
-});
-
-/**
- * Log Level
- * error : 0, warn : 1, info : 2, http : 3, verbose : 4, debug : 5, silly : 6
- */
-const logger = winston.createLogger({
-    format : combine(
-        timestamp({
-            format : 'YYYY-MM-DD HH:mm:ss',
-        }),
-        logFormat,
-    ), transports : [
-        // info 레벨 로그 저장 포멧
-        new winstonDaily({
-            level : 'info',
-            datePattern : 'YYYY-MM-DD',
-            dirname : logDir,
-            filename : `%DATE%.log`,
-            maxFiles : 30,      // 30일 로그파일 저장
-            zippedArchive : true,
-        }),
-
-        // error 레벨 로그 저장 포멧
-        new winstonDaily({
-            level : 'error',
-            datePattern : 'YYYY-MM-DD',
-            dirname : logDir + '/error',
-            filename : `%DATE%.error.log`,
-            maxFiles : 30,
-            zippedArchive : true,
+export let Logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.combine(
+        winston.format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
+        // winston.format.prettyPrint(),
+        // winston.format.cli(),
+        winston.format.simple(),
+        winston.format.splat(),  // String interpolation splat for %d %s-style messages.
+        winston.format.json(),
+        winston.format.printf((log) => `${moment().format('YYYY-MM-DD HH:mm:ss.SSS')},[${log.level.toUpperCase()}][Message]-${log.message}`)
+    ),
+    transports: [
+        // new winston.transports.Console(),
+        new (winstonDaily)({
+            filename: 'logs/log-api-%DATE%.log',
+            // datePattern: 'YYYY-MM-DD-HH-mm',
+            datePattern: 'YYYYMMDD',
+            zippedArchive: false,
+            createSymlink: true,
+            level: 'info',
+            symlinkName: 'api.log',
+            maxSize: 50000000,
+            maxFiles: 40,
         })
     ],
 });
 
-// Production 환경이 아닌 경우(dev 등) 
-if (config.APP_MODE !== 'production') {
-    logger.add(new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),  // 색깔 넣어서 출력
-        winston.format.simple(),  // `${info.level}: ${info.message} JSON.stringify({ ...rest })` 포맷으로 출력
-      )
-    }));
-}
-
-export default logger
+export let AccessLog = winston.createLogger({
+    level: 'debug',
+    format: winston.format.combine(
+        winston.format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
+        // winston.format.prettyPrint(),
+        // winston.format.cli(),
+        winston.format.simple(),
+        winston.format.splat(),  // String interpolation splat for %d %s-style messages.
+        winston.format.json(),
+        winston.format.printf((log) => `${moment().format('YYYY-MM-DD HH:mm:ss.SSS')},[${log.level.toUpperCase()}][Message]-${log.message}`)
+    ),
+    transports: [
+        // new winston.transports.Console(),
+        new (winstonDaily)({
+            filename: 'logs/log-api-access-%DATE%.log',
+            // datePattern: 'YYYY-MM-DD-HH-mm',
+            datePattern: 'YYYYMMDD',
+            zippedArchive: false,
+            createSymlink: true,
+            level: 'debug',
+            symlinkName: 'access.log',
+            maxSize: 50000000,
+            maxFiles: 30,
+        })
+    ],
+});

@@ -20,3 +20,28 @@ npm start
     - 이곳에서 다양한 기능을 불러온다면 복잡해 보여 가능한 서버 실행만 보여주기 위해 loaders 사용
 
 
+## loaders/index.js
+### DatabaseLoader
+- 각 DB connection 을 진행 시킨다
+    - 다양한 DB를 활용시 loaders file 안에 이름을 정한 후 connecting 설정을 하고
+    - 이 곳 경로에서 호출해 setting 한다
+
+### DependencyLoader
+- 각각의 의존성 주입을 위한 곳
+    - 위 와 같이 DB 및 각각 모듈을 설정하고 전역 사용을 위해 사용된다.
+
+    #### Container 설명
+    - Container 란 각각 호출한 모듈 및 라이브러리를 사용하기 위한 라이브러리 이다.
+        ```javascript
+        import {Container} from "typedi";
+
+        Container.set('사용할 이름', 전역설정할라이브러리);
+        ```
+    - 호출시
+        ```javascript
+        const a = Container.get('사용할이름');
+        ```
+
+### ExpressLoader
+- Express 미들웨어 및 기타 설정을 하는 구역이다.
+
